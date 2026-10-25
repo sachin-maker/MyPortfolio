@@ -28,6 +28,18 @@ import {
 } from "simple-icons";
 
 
+const CATEGORY_ORDER = [
+  "Frontend",
+  "Backend",
+  "Database",
+  "DevOps",
+  "Testing",
+  "Tools",
+];
+
+
+
+
 const skillIcons: Record<string, SimpleIcon> = {
     react: siReact,
     "react.js": siReact,
@@ -90,6 +102,17 @@ export default async function SkillsSection() {
         new Set(skills.map((skill) => skill.category))
     );
 
+    const sortedCategories = [...categories].sort((a, b) => {
+    const indexA = CATEGORY_ORDER.indexOf(a);
+    const indexB = CATEGORY_ORDER.indexOf(b);
+
+    if (indexA === -1 && indexB === -1) return a.localeCompare(b);
+    if (indexA === -1) return 1;
+    if (indexB === -1) return -1;
+
+    return indexA - indexB;
+});
+
     return (
         <section
             id="skills"
@@ -123,7 +146,7 @@ export default async function SkillsSection() {
                     </p>
                 ) : (
                     <div className="mt-12 space-y-12">
-                        {categories.map((category, categoryIndex) => {
+                        {sortedCategories.map((category, categoryIndex) => {
                             const categorySkills = skills.filter(
                                 (skill) => skill.category === category
                             );
