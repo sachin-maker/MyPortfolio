@@ -22,6 +22,15 @@ type SkillForm = {
   isActive: boolean;
 };
 
+const SKILL_CATEGORIES = [
+  "Frontend",
+  "Backend",
+  "Database",
+  "DevOps",
+  "Testing",
+  "Tools",
+] as const;
+
 const emptyForm: SkillForm = {
   name: "",
   category: "Frontend",
@@ -230,19 +239,29 @@ export default function SkillsManager({
               />
             </label>
 
-            <label className="text-sm text-zinc-300">
-              Category *
-              <input
-                required
-                maxLength={80}
-                value={form.category}
-                onChange={(event) =>
-                  setForm({ ...form, category: event.target.value })
-                }
-                placeholder="Frontend, Backend, Tools..."
-                className="mt-2 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white outline-none focus:border-violet-400/60"
-              />
-            </label>
+
+<label className="text-sm text-zinc-300">
+  Category *
+  <select
+    required
+    value={form.category}
+    onChange={(event) =>
+      setForm({ ...form, category: event.target.value })
+    }
+    className="mt-2 w-full rounded-xl border border-white/10 bg-[#15131d] px-4 py-3 text-white outline-none focus:border-violet-400/60"
+  >
+    {SKILL_CATEGORIES.map((category) => (
+      <option
+        key={category}
+        value={category}
+        className="bg-[#15131d] text-white"
+      >
+        {category}
+      </option>
+    ))}
+  </select>
+</label>
+
 
             <label className="text-sm text-zinc-300">
               Proficiency (0–100, optional)
